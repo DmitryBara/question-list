@@ -1,0 +1,125 @@
+# Authorization is required for some GraphQL endpoints.
+# 1. Call Authorization mutation. 
+# 2. Setup header manually open REQUEST HEADERS tab in down menu.
+# 3. Put json there: 
+# {"Authorization": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMUBhcHAuY29tIiwiZXhwIjoxNjQ4ODE3ODg3LCJvcmlnSWF0IjoxNjQ4ODE3NTg3fQ.IV2IM-LKWdikMwJylKFQ_CSVB9IfOMrJye8CLHD41gY"}
+
+mutation Authorization {
+  tokenAuth(username: "testuser1@app.com", password: "Password1") {
+    token
+  }
+}
+
+
+query QuestionnaireList{
+  questionnaire {
+    id,
+    title,
+    userCreator {
+      email,
+      firstName
+    },
+    orderedQuestionIds,
+    questionSet {
+      id,
+      text,
+      answerType,
+    }
+  }
+}
+
+
+# Login required
+mutation CreateQuestionnaire {
+  createQuestionnaire(
+    title: "Interview questions"
+  ) {
+		questionnaire {
+      id,
+      title,
+      userCreator {
+        email,
+        firstName
+      },
+      orderedQuestionIds,
+      questionSet {
+        id,
+        text,
+        answerType,
+      }
+    }
+  }
+}
+
+
+# Login required
+mutation CreateQuestion {
+  createQuestion(
+    questionnaireId: 14,
+    text: "Do you have experience with OOOO?",
+    answerType: SHORT_ANSWER, 
+  ) {
+    questionnaire {
+      id,
+      title,
+      userCreator {
+        email,
+        firstName
+      }
+      orderedQuestionIds,
+      questionSet {
+        id,
+        text,
+        answerType,
+      }
+    }
+  }
+}
+
+
+# Login required
+mutation DeleteQuestion {
+  deleteQuestion(
+    questionnaireId: 14,
+    questionId: 52
+  ) {
+    questionnaire {
+      id,
+      title,
+      userCreator {
+        email,
+        firstName
+      }
+      orderedQuestionIds,
+      questionSet {
+        id,
+        text,
+        answerType,
+      }
+    }
+  }
+}
+
+
+# Login required
+mutation ReorderQuestions {
+  reorderQuestions(
+    questionnaireId: 14,
+    orderedQuestionIds: [68, 72, 69]
+  ) {
+    questionnaire {
+      id,
+      title,
+      userCreator {
+        email,
+        firstName
+      }
+      orderedQuestionIds,
+      questionSet {
+        id,
+        text,
+        answerType,
+      }
+    }
+  }
+}
